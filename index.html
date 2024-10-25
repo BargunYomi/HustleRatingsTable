@@ -13,14 +13,14 @@
     <table id="myTable" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Number</th>
+                <th>HustleID</th>
+                <th>StartID</th>
                 <th>Name</th>
-                <th>Value</th>
-                <th>Score 1</th>
-                <th>Score 2</th>
-                <th>Amount</th>
-                <th>Status</th>
+                <th>Rating</th>
+                <th>Games Played</th>
+                <th>Games Won</th>
+                <th>Win Percentage</th>
+                <th>Ignore</th>
             </tr>
         </thead>
         <tbody>
@@ -39,19 +39,26 @@
             // Parse the CSV file
             Papa.parse("players.csv", {
                 download: true,
-                header: true, // Read the first row as headers
+                header: false, // Set to false since there are no headers
+                skipEmptyLines: true, // Skip empty lines
                 complete: function(results) {
+                    // Check the parsed results in the console
+                    console.log("Parsed Results:", results.data);
+
                     // Format the data for DataTables
                     const tableData = results.data.map(row => [
-                        row["HustleID"],
-                        row["StartID"],
-                        row["Name"],
-                        row["Rating"],
-                        row["Games Played"],
-                        row["Games Won"],
-                        row["Win Percentage"],
-                        row["Ignore"]
+                        row[0]?.replace(/"/g, '') || "", // HustleID
+                        row[1]?.replace(/"/g, '') || "", // StartID
+                        row[2]?.replace(/"/g, '') || "", // Name
+                        row[3]?.replace(/"/g, '') || "", // Rating
+                        row[4]?.replace(/"/g, '') || "", // Games Played
+                        row[5]?.replace(/"/g, '') || "", // Games Won
+                        row[6]?.replace(/"/g, '') || "", // Win Percentage
+                        row[7]?.replace(/"/g, '') || ""  // Ignore
                     ]);
+
+                    // Log the formatted table data to the console
+                    console.log("Table Data:", tableData);
                     
                     // Initialize DataTable
                     $('#myTable').DataTable({
