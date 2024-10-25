@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive CSV Table</title>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+</head>
+<body>
+
+    <h2>Database Table</h2>
+    <table id="myTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Score 1</th>
+                <th>Score 2</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here by JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- jQuery and DataTables JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Papa Parse for CSV Parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Parse the CSV file
+            Papa.parse("players.csv", {
+                download: true,
+                header: true, // Read the first row as headers
+                complete: function(results) {
+                    // Format the data for DataTables
+                    const tableData = results.data.map(row => [
+                        row["HustleID"],
+                        row["StartID"],
+                        row["Name"],
+                        row["Rating"],
+                        row["Games Played"],
+                        row["Games Won"],
+                        row["Win Percentage"],
+                        row["Ignore"]
+                    ]);
+                    
+                    // Initialize DataTable
+                    $('#myTable').DataTable({
+                        data: tableData,
+                        columns: [
+                            { title: "HustleID" },
+                            { title: "StartID" },
+                            { title: "Name" },
+                            { title: "Rating" },
+                            { title: "Games Played" },
+                            { title: "Games Won" },
+                            { title: "Win Percentage" },
+                            { title: "Ignore" }
+                        ]
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
