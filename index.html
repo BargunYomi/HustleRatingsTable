@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hustle Ratings!</title>
 
-    <!-- Bulma CSS for Dark Mode -->
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bulma.min.css">
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bulma.min.css">
     
     <style>
         body {
@@ -93,30 +92,29 @@
         <thead>
             <tr>
                 <th>HustleID</th>
-                <th>StartID</th> <!-- This column will be hidden -->
+                <th>StartID</th> 
                 <th>Name</th>
                 <th>Rating</th>
                 <th>Games Played</th>
                 <th>Games Won</th>
                 <th>Win Percentage</th>
-                <th>Ignore</th> <!-- This column will also be hidden -->
+                <th>Ignore</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Data will be populated here by JavaScript -->
+      
         </tbody>
     </table>
 
-    <!-- jQuery and DataTables JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bulma.min.js"></script>
-    <!-- Papa Parse for CSV Parsing -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
     <script>
         $(document).ready(function() {
-            // Parse the CSV file
+    
             Papa.parse("players.csv", {
                 download: true,
                 header: false,
@@ -153,7 +151,7 @@
                         columnDefs: [
                             { targets: [1, 7], visible: false }
                         ],
-                        pageLength: 100 // Show up to 100 entries per page
+                        pageLength: 100
                     });
                 }
             });
