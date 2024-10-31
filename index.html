@@ -1,86 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hustle Ratings!</title>
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bulma.min.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hustle Ratings!</title>
     
-    <style>
-        body {
-            background-color: #121212;
-            color: #e0e0e0;
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh; /* Full screen */
-        }
-        .title-section {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        h2.title {
-            color: #ffffff;
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        #myTable {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        }
-        #myTable thead th {
-            background-color: #333;
-            color: #ffffff;
-            font-weight: bold;
-            padding: 12px;
-            text-align: left;
-            border-bottom: 2px solid #555;
-        }
-        #myTable tbody tr {
-            background-color: #1e1e1e;
-        }
-        #myTable tbody tr:nth-child(even) {
-            background-color: #262626;
-        }
-        #myTable tbody tr:hover {
-            background-color: #333;
-        }
-        .dataTables_wrapper .dataTables_filter input,
-        .dataTables_wrapper .dataTables_length select {
-            background-color: #333;
-            color: #e0e0e0;
-            border: 1px solid #555;
-            border-radius: 3px;
-            padding: 5px;
-        }
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            background-color: #333;
-            color: #e0e0e0;
-            margin: 0 3px;
-            padding: 6px 12px;
-            border-radius: 3px;
-            text-decoration: none;
-        }
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background-color: #555;
-        }
-    </style>
-</head>
+        <!-- Bulma CSS for Dark Mode -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bulma.min.css">
+        
+        <style>
+            body {
+                background-color: #121212;
+                color: #e0e0e0;
+                font-family: 'Roboto', sans-serif;
+                margin: 0;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+            .title-section {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            h2.title {
+                color: #ffffff;
+                font-size: 2.5rem;
+                font-weight: bold;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            #myTable {
+                width: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+                background-color: #1e1e1e;
+                color: #e0e0e0;
+                border-radius: 5px;
+                overflow: hidden;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            }
+            #myTable thead th {
+                background-color: #333;
+                color: #ffffff;
+                font-weight: bold;
+                padding: 12px;
+                text-align: left;
+                border-bottom: 2px solid #555;
+            }
+            #myTable tbody tr {
+                background-color: #1e1e1e;
+            }
+            #myTable tbody tr:nth-child(even) {
+                background-color: #262626;
+            }
+            #myTable tbody tr:hover {
+                background-color: #333;
+            }
+    
+
+            .dataTables_wrapper .dataTables_length select {
+                background-color: #333;
+                color: #e0e0e0;
+                border: 1px solid #555;
+                border-radius: 4px;
+                padding: 8px 12px; 
+                font-size: 1rem;   
+                margin-right: 10px;
+                width: auto;       
+            }
+    
+            .dataTables_wrapper .dataTables_filter input {
+                padding: 8px;
+                font-size: 1rem;
+            }
+    
+            .dataTables_wrapper .dataTables_paginate .paginate_button {
+                padding: 8px 16px;
+                font-size: 1rem;
+                background-color: #333;
+                color: #e0e0e0;
+                margin: 0 3px;
+                border-radius: 4px;
+            }
+        </style>
+    </head>
+    
 <body>
 
     <div class="title-section">
