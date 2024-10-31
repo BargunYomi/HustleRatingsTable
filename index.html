@@ -1,86 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hustle Ratings!</title>
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hustle Ratings!</title>
+    <!-- Bulma CSS for Dark Mode -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bulma.min.css">
+    
+    <style>
+        body {
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text for contrast */
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #ffffff;
+        }
+        #myTable {
+            width: 100%;
+            margin: 0 auto;
+            background-color: #1e1e1e; /* Dark table background */
+            color: #e0e0e0; /* Light text color */
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+        /* Table headers */
+        #myTable thead th {
+            background-color: #333;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #555;
+        }
+        /* Table rows */
+        #myTable tbody tr {
+            background-color: #1e1e1e;
+        }
+        #myTable tbody tr:nth-child(even) {
+            background-color: #262626;
+        }
+        #myTable tbody tr:hover {
+            background-color: #333;
+        }
+        /* DataTables controls */
+        .dataTables_wrapper .dataTables_filter input {
+            background-color: #333;
+            color: #e0e0e0;
+            border: 1px solid #555;
+            border-radius: 3px;
+            padding: 5px;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            background-color: #333;
+            color: #e0e0e0;
+            margin: 0 3px;
+            padding: 6px 12px;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #555;
+        }
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_filter input {
+            color: #e0e0e0;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 3px;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Hustle Ratings!</h2>
-<table id="myTable" class="display" style="width:100%">
-<thead>
-<tr>
-<th>HustleID</th>
-<th>StartID</th> <!-- This column will be hidden -->
-<th>Name</th>
-<th>Rating</th>
-<th>Games Played</th>
-<th>Games Won</th>
-<th>Win Percentage</th>
-<th>Ignore</th> <!-- This column will also be hidden -->
-</tr>
-</thead>
-<tbody>
-<!-- Data will be populated here by JavaScript -->
-</tbody>
-</table>
+    <h2>Hustle Ratings!</h2>
+    <table id="myTable" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+            <tr>
+                <th>HustleID</th>
+                <th>StartID</th> <!-- This column will be hidden -->
+                <th>Name</th>
+                <th>Rating</th>
+                <th>Games Played</th>
+                <th>Games Won</th>
+                <th>Win Percentage</th>
+                <th>Ignore</th> <!-- This column will also be hidden -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here by JavaScript -->
+        </tbody>
+    </table>
 
-<!-- jQuery and DataTables JavaScript -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<!-- Papa Parse for CSV Parsing -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <!-- jQuery and DataTables JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bulma.min.js"></script>
+    <!-- Papa Parse for CSV Parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
-<script>
-$(document).ready(function() {
-// Parse the CSV file
-Papa.parse("players.csv", {
-download: true,
-header: false, // Set to false since there are no headers
-skipEmptyLines: true, // Skip empty lines
-complete: function(results) {
-// Check the parsed results in the console
-console.log("Parsed Results:", results.data);
+    <script>
+        $(document).ready(function() {
+            // Parse the CSV file
+            Papa.parse("players.csv", {
+                download: true,
+                header: false, // Set to false since there are no headers
+                skipEmptyLines: true, // Skip empty lines
+                complete: function(results) {
+                    // Check the parsed results in the console
+                    console.log("Parsed Results:", results.data);
 
-// Format the data for DataTables
-const tableData = results.data.map(row => [
-row[0]?.replace(/"/g, '') || "", // HustleID
-row[1]?.replace(/"/g, '') || "", // StartID
-row[2]?.replace(/"/g, '') || "", // Name
-row[3]?.replace(/"/g, '') || "", // Rating
-row[4]?.replace(/"/g, '') || "", // Games Played
-row[5]?.replace(/"/g, '') || "", // Games Won
-row[6]?.replace(/"/g, '') || "", // Win Percentage
-row[7]?.replace(/"/g, '') || ""  // Ignore
-]);
+                    // Format the data for DataTables
+                    const tableData = results.data.map(row => [
+                        row[0]?.replace(/"/g, '') || "", // HustleID
+                        row[1]?.replace(/"/g, '') || "", // StartID
+                        row[2]?.replace(/"/g, '') || "", // Name
+                        row[3]?.replace(/"/g, '') || "", // Rating
+                        row[4]?.replace(/"/g, '') || "", // Games Played
+                        row[5]?.replace(/"/g, '') || "", // Games Won
+                        row[6]?.replace(/"/g, '') || "", // Win Percentage
+                        row[7]?.replace(/"/g, '') || ""  // Ignore
+                    ]);
 
-// Log the formatted table data to the console
-console.log("Table Data:", tableData);
+                    // Log the formatted table data to the console
+                    console.log("Table Data:", tableData);
 
-// Initialize DataTable with hidden columns
-$('#myTable').DataTable({
-data: tableData,
-columns: [
-{ title: "HustleID" },
-{ title: "StartID" }, // This column will be hidden
-{ title: "Name" },
-{ title: "Rating" },
-{ title: "Games Played" },
-{ title: "Games Won" },
-{ title: "Win Percentage" },
-{ title: "Ignore" } // This column will also be hidden
-],
-order: [[3, 'desc']], // Sort by Rating (3rd column) in descending order
-columnDefs: [
-{ targets: [1, 7], visible: false } // Hide StartID and Ignore columns (1st and 7th index)
-]
-});
-}
-});
-});
-</script>
+                    // Initialize DataTable with hidden columns
+                    $('#myTable').DataTable({
+                        data: tableData,
+                        columns: [
+                            { title: "HustleID" },
+                            { title: "StartID" }, // This column will be hidden
+                            { title: "Name" },
+                            { title: "Rating" },
+                            { title: "Games Played" },
+                            { title: "Games Won" },
+                            { title: "Win Percentage" },
+                            { title: "Ignore" } // This column will also be hidden
+                        ],
+                        order: [[3, 'desc']], // Sort by Rating (3rd column) in descending order
+                        columnDefs: [
+                            { targets: [1, 7], visible: false } // Hide StartID and Ignore columns (1st and 7th index)
+                        ]
+                    });
+                }
+            });
+        });
+    </script>
 </body>
-</html>
