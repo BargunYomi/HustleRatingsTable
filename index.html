@@ -122,7 +122,7 @@
             // Parse the CSV file
             Papa.parse("players.csv", {
                 download: true,
-                header: false, // Set to false since there are no headers
+                header: true, // Set to true to use the first row as headers
                 skipEmptyLines: true, // Skip empty lines
                 complete: function(results) {
                     // Check the parsed results in the console
@@ -130,14 +130,14 @@
 
                     // Format the data for DataTables
                     const tableData = results.data.map(row => [
-                        row[0]?.replace(/"/g, '') || "", // HustleID
-                        row[1]?.replace(/"/g, '') || "", // StartID
-                        row[2]?.replace(/"/g, '') || "", // Name
-                        row[3]?.replace(/"/g, '') || "", // Rating
-                        row[4]?.replace(/"/g, '') || "", // Games Played
-                        row[5]?.replace(/"/g, '') || "", // Games Won
-                        row[6]?.replace(/"/g, '') || "", // Win Percentage
-                        row[7]?.replace(/"/g, '') || ""  // Ignore
+                        row.HustleID || "", // HustleID
+                        row.StartID || "",  // StartID
+                        row.Name || "",     // Name
+                        row.Rating || "",   // Rating
+                        row["Games Played"] || "", // Games Played
+                        row["Games Won"] || "",    // Games Won
+                        row["Win Percentage"] || "", // Win Percentage
+                        row.Ignore || ""    // Ignore
                     ]);
 
                     // Log the formatted table data to the console
